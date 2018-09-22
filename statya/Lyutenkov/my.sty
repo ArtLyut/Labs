@@ -1,0 +1,29 @@
+% Tеперь определим колонтитулv
+ \let\@mkboth\markboth
+  \def\@oddfoot{}\def\@evenfoot{}%
+  \def\@@evenhead{\hbox to \textwidth{\rm \thepage\hfil
+\sl \leftmark\strut}}%        Left heading without rule...
+  \def\@evenhead{\vtop to \headheight  {\@@evenhead\hrule\vss}} % and with rule
+  \def\@@oddhead{\hbox to\textwidth{{\sl \rightmark}\hfil
+\rm\thepage\strut}}% Ditto for right heading.
+  \def\@oddhead{\vtop to \headheight   {\@@oddhead\hrule\vss}}
+  \def\chaptermark#1{\markboth {\uppercase{%
+      \@chapapp\ \thechapter.\hskip.5em\relax #1}}{}}%
+  \def\sectionmark#1{\markright{\uppercase {%
+  \thechapter.\arabic{section}.\hskip .5em\relax #1}}}
+
+\renewcommand{\chapter}{\clearpage
+   \thispagestyle{plain}%
+   \global\@topnum=\z@
+   \@afterindenttrue
+   \secdef\@chapter\@schapter}
+\renewcommand{\@makecaption}[2]{%
+\vspace{\abovecaptionskip}%
+\sbox{\@tempboxa}{#1. #2}
+\ifdim \wd\@tempboxa >\hsize
+#1. #2\par
+\else
+\global\@minipagefalse
+\hbox to \hsize {\hfil #1. #2\hfil}%
+\fi
+\vspace{\belowcaptionskip}}

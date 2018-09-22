@@ -1,0 +1,353 @@
+\documentclass[fullscreen=true,unicode,bookmarks=false]{beamer}
+% Standard packages
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+
+\usepackage{wrapfig}
+
+\mode<presentation>
+%{
+%  % or ...
+
+%  % or whatever (possibly just delete it)
+%}
+
+% Setup appearance:
+\usetheme{Madrid}
+%\usetheme{Rochester}
+%\usetheme{Frankfurt}
+%\usetheme{Darmstadt}
+%\usetheme{Warsaw}
+%\usetheme{Boadilla}
+%\usetheme{Berlin}
+\usecolortheme{beaver}
+
+%\useinnertheme[shadow]{rounded}
+\usepackage{tikz}
+\usepgflibrary{arrows}
+\usepackage{graphicx}
+
+\definecolor{MidnightBlue}{rgb}{0.2,0.2,0.5}
+\definecolor{myblue}{rgb}{0.6,0.4,0.6}
+\definecolor{lightyellow}{rgb}{1,1,0.7}
+\definecolor{lightblue}{rgb}{0.4,0.6,1}
+\definecolor{lightgreen}{rgb}{0.6,1,0.6}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{greenyellow}{rgb}{0.8,1,0.6}
+\definecolor{ellipsecolor}{rgb}{0.8,1,0.8}
+\definecolor{lightgray}{rgb}{0.7,0.7,0.7}
+\definecolor{myred}{rgb}{0.8,0.2,0.2}
+
+\tikzstyle{thickr}=[thick, myred]
+
+% Animation
+\newdimen\offset 
+
+
+%\setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{}
+%\usefonttheme[onlylarge]{structurebold}
+%\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries}
+
+% New commands
+\newcommand{\R}{\mathbb{R}}  %Set of real numbers
+\newcommand{\N}{\mathbb{N}}  %Set of natural numbers
+\newcommand\op[1]{\mathop{\rm #1}\nolimits}
+\newcommand\conv{\op{conv}}
+\newcommand\len{\op{len}}
+\newcommand\ext{\op{ext}}
+\renewcommand{\le}{\leqslant}         
+\renewcommand{\ge}{\geqslant}         
+
+\newtheorem{mytheorem}{Theorem}
+\newtheorem{mylemma}{Lemma}
+\newtheorem{mycorollary}{Corollary}
+\theoremstyle{example}
+\newtheorem{myexample}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{mydefinition}{Definition}
+
+
+\newcommand{\vo}{{\rm vol}}
+\newcommand{\ver}{{\rm ver}}
+
+
+
+\title[Нормы интерполяционных проекторв и экстремальные симплексы]
+{Нормы интерполяционных проекторв и экстремальные симплексы}
+
+\author{А. В. Лютенков}
+
+\institute{ЯрГУ им. П.Г. Демидова \\ Научный руководитель доцент кафедры математического анализа ЯрГУ им. П. Г. Демидова, кандидат физико-математических наук А.Ю. Ухалов.}
+
+\date{16 июня 2018}
+
+
+\makeatletter
+\setbeamertemplate{footline}{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.14\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor\expandafter\ifblank\expandafter{\beamer@shortinstitute}{}{~~(\insertshortinstitute)}
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.58\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip0pt%
+}
+\makeatother
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\section{А.В. Лютенков. Нормы интерполяционных проекторв и экстремальные симплексы}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%\AtBeginSubsection[]
+%\begin{frame}{План}
+%  \begin{frame}<beamer>{Outline}
+%  \tableofcontents[currentsection,currentsubsection]
+%    \tableofcontents
+  % You might wish to add the option [pausesections]
+%\end{frame}
+
+%\section{Introduction}
+
+%\subsection{Examples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Объект исследования ицель работы}
+\begin{block}{}
+Объектом исследования является задача о построении минимального проектора (проектора, имеющего минимальную норму) при интерполяции непрерывной на кубе функции с помощью полиномов n переменных степени не выше единицы.
+\end{block} 
+\begin{block}{}
+Цель работы --- разработать компьютерную программу для численной минимизации функции многих переменных и применить ее для решения задачи о минимальном проекторе.
+\end{block} 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Задача линейной интерполяции на n-мерном кубе}
+\framesubtitle{Основные понятия}
+\begin{block}{}
+Положим $Q_ n:= [0..1]^n$, где $n \in \mathbb{R}^n$, $Q_ n$ --- n-мерный куб, множество вершин куба будем обозначать как $ver(Q_n)$.
+\end{block} 
+\begin{block}{}
+$\Pi_1(\mathbb{R}^n)$ --- совокупность многочленов n переменных степени $\leqslant 1$.
+\end{block} 
+\begin{block}{}
+	Симплекс(размерности $n$) --- это выпуклая оболочка $n+1$ точки аффинного пространства, которые предполагаются аффинно независимыми (то есть не лежат в подпространстве размерности $n-1$). Эти точки называются вершинами симплекса.
+\end{block} 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+
+%\begin{block}{Координаты вершин}
+\begin{block}{}
+Пусть вершины невырожденного симплекса $S\subset {\mathbb R^n}$ $x^{(j)}=\left(x_1^{(j)},\ldots,x_n^{(j)}\right), \quad 1\leq j\leq n+1.$
+
+Матрица для сипмлекса $S$ имеет вид:
+\begin{equation}
+{\bf A} :=
+\left( \begin{array}{cccc}
+x_1^{(1)}&\ldots&x_n^{(1)}&1\\
+x_1^{(2)}&\ldots&x_n^{(2)}&1\\
+\vdots&\vdots&\vdots&\vdots\\
+x_1^{(n+1)}&\ldots&x_n^{(n+1)}&1\\
+\end{array}
+\right).
+\end{equation}
+\end{block}
+\begin{block}{}
+Скажем, что набор точек $x^{(j)}$ --- допустим для интерполяции многочленами из $\Pi_1(\mathbb{R}^n)$. Это условие эквивалентно тому, что
+матрица A является невырожденной. 
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{block}{}
+$\Delta := det(A)$, определитель, который получается  из  $\Delta$ заменой j-й строки на строку $(x_1, \dots, x_n, 1)$
+\end{block}
+\begin{block}{}
+Многочленый $\lambda_j(x) := \Delta_j(x)/\Delta$ из $\Pi_1(\mathbb{R}^n)$ называются базисными многочленами Лагранжа симплекса S и обладают свойством  $\lambda_j(x^{k}) = \delta^k_j $, где $\delta^k_j $ --- символ Кронакера.
+\end{block}
+\begin{block}{}
+$\lambda_j = l_{1j}x_1 + \dots + l_{nj}x_n + l_{n+1j}$, коэффициентны $l_{ij}$ составляют столбцы матрицы $$A^{-1} = {\begin{pmatrix}
+	\dots & l_{1,j}&\dots\\
+	\vdots & \vdots & \vdots \\
+	\dots& l_{n,j} & \dots\\
+	\dots& l_{n+1,j} & \dots\\
+	\end{pmatrix}}.\eqno (2)$$
+\end{block}	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{block}{}
+Так как $\lambda_j(x^{k}) = \delta^k_j $ любой многочлен $p \in \Pi_1(\mathbb{R}^n)$ удовлетворяет равенству 
+$$p(x) = \sum\limits_{j = 1}^{n+1} p(x^{(j)})\lambda_j(x). \eqno (3)$$
+\end{block}
+
+\begin{block}{}
+Так как $det(A) \neq 0 $, то для любой  $f \in C(Q_n)$, где $C(Q_n)$ --- совокупность $f : Q_n \rightarrow \mathbb{R}$ найдется единственный многочлен $p \in \Pi_1(\mathbb{R}^n	)$ удовлетворяющий условиям:
+$$p(x^{(j)}) = f(x^{(j)}). \eqno (4)$$
+\end{block}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Интерполяционный проектор}
+
+\begin{block}{Интерполяционный проектор по системе узлов $x^{(j)}$}
+$P : C(Q_n)  \rightarrow \Pi_1(\mathbb{R}^n)$
+\end{block}
+\begin{block}{}
+Интерполяционный проектор по системе узлов $x^{(j)}$ определяется с помощью равенств:
+$$Pf(x^{(j)}) = f_j := f(x^{(j)}),  j = 1,\dots, n+1. \eqno (5)$$
+\end{block}
+\begin{block}{}
+Из (5) следует, что данный оператор является линейным и справедлив следующий аналог интерполяционной формулы Лагранжа:
+$$Pf(x^{(j)}) = p(x) = \sum\limits_{j=1}^{n+1} f_j\lambda_j(x). \eqno(6)$$
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Норма интерполяционного проектора}
+\begin{block}{}
+	Обозначим $||P||$ норму оператора Р. Эта величина зависит от от узлов $x^{(j)}$. 
+\end{block}
+\begin{block}{}
+Для любого интерполяционного проектора $P : C(Q_n)\rightarrow \Pi_1(\mathbb{R}^n)$ и симплекса $S$ с вершинами в его узлах имеет место равенство 
+$$||P|| = \max\limits_{x \in ver(Q_n)} \sum\limits_{j = 1}^{n+1} |\lambda_j(x)|\eqno (7)$$
+\end{block}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Минимальная норма проектора}
+\begin{block}{}
+	Обозначим через $\theta_n$ минимальну норму проектора, при условии, что все узлы принадлежат кубу $Q_n$:
+	$$\theta_n := \min\limits_{x^{(j)} \in Q_n}||P||\eqno (8)$$
+\end{block}
+\begin{block}{}
+	Интерполяционный проектор $P^*$ c нормой $||P^*|| = \theta_n$ назовем минимальным. 
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Оценки минимальной нормы проектора}
+\begin{block}{}
+$$\frac{1}{4}\sqrt{n}< \theta_n <3\sqrt{n},$$
+$$3-\frac{4}{n+1}\leqslant\theta_n.$$
+\end{block}
+\begin{flushright}
+\end{flushright}
+%\begin{table}[H]
+\begin{center}
+	{\bf Примеры оценок $\theta_n$}\\
+	\begin{tabular}{|c|c|} \hline
+		n&$\theta_n$\\ \hline
+		1 & $\theta_n = 1$\\ \hline
+		2 & $\theta_n = 1.89\ldots$\\ \hline
+		3 & $\theta_n = 2$\\ \hline
+		4 & $2.2\ldots \leqslant\theta_n\leqslant2.33\ldots$\\ \hline
+		5 & $2.33\ldots \leqslant\theta_n\leqslant2.6\ldots$\\ \hline
+		6 & $2.42\ldots \leqslant\theta_n\leqslant3$\\ \hline
+		7 & $\theta_n = 2.5$\\ \hline
+	\end{tabular}
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Компьютерная программа для расчета $\theta_n$}
+Задача об отыскании минимальной нормы проектора сводится к задаче отыскания минимума функции многих переменных. 
+Норма проектора вычисляется по формуле(7), зная это, зададим целевую функцию для минимизации:
+\begin{block}{}
+$$F(A) = \max\limits_{x \in ver(Q_n)} \sum\limits_{j = 1}^{n+1} |\lambda_j(x)|\eqno (9)$$
+\end{block}
+
+Где А --- марица, которая имеет вид (1).
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+\begin{block}{}
+Программа реализована на языке программировани C++ с использованием библиотек Dlib, Boost, Eigen, которые предоставляют необходимый функционал для оптимального решения поставленной задачи.
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+Так как для вычисления нормы проектора необходим перебор по вершинам куба, то асимптотика алгоритма отыскания $\theta_n$ будет порядка $O(2^n)$. Для оптимальной работы с матрицами и операций над ними (напимер вычисление обратной матрицы) используется библиотека Eigen.
+Для оптимизации целевой функции (9) используются решения, поставляемые библиотекой Dlib. Dlib предоставляет метод минимизации нелинейной функции многих переменных внутри куба $Q_n$, с возможностью использования различных стратегий поиска минимума функции. Для решения текущей задачи стратегиями поиска были выбраны алгоритмы: BFGS и L-BFGS.
+\end{frame}
+
+\begin{frame}{Результаты}
+\begin{block}{}
+	С помощью реализованной программы были получены численные верхние оценки минимальных норм проекторов для $n=1,\ldots,20$. Наиболее точные на момент выполнения работы оценки 
+	содержатся в книге Невского М. В. Геометрические оценки в полиномиальной интерполяции. \\Оценки для $n = 4$ и $n = 6$ были улучшены в работе Кудрявцев, И. С., Озерова Е. А., Ухалов А.Ю. Новые оценки для норм минимальных проекторов, 2017.
+	Нам удалось найти более точные по сравнению с известными оценки при  $n = 5, 6, 10, 14, 18, 20$.
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Полученные верхние оценки минимальной нормы интерполяционного проектора}
+\begin{center}
+	\begin{tabular}{|c|c|c|c|} \hline
+		n& Известные оценки $\theta_n$ & Уточненные оценки $\theta_n$  & \\ \hline
+		1 & $\theta_1 = 1$ & $\theta_1 = 1$ & \\ \hline
+		2 & $\theta_2 = 1.89\ldots$ & $\theta_2 = 1.89\ldots$ & \\ \hline
+		3 & $\theta_3 = 2$ & $\theta_3 = 2$ & \\ \hline
+		4 & $2.2\ldots \leqslant\theta_n\leqslant2.3203\ldots$ & $2.2\ldots \leqslant\theta_n\leqslant2.3204\ldots$ & \\ \hline
+		5 & $2.33\ldots \leqslant\theta_n\leqslant2.6\ldots$& $2.33\ldots \leqslant\theta_n\leqslant2.44880\ldots $ & $*$ \\\hline
+		6 & $2.42\ldots \leqslant\theta_n\leqslant3$ & $2.42\ldots \leqslant\theta_n\leqslant2.60004\ldots$  &  $*$ \\ \hline
+		7 & $\theta_7 = 2.5$& $\theta_7 = 2.5$  & \\ \hline
+		8 & $2.5555\ldots\leqslant\theta_8\leqslant3.1428\dots$ &  $2.5555\ldots\leqslant\theta_8\leqslant3.1428\dots$  &  \\ \hline
+		9 &$2.6\leqslant\theta_9\leqslant3.0000\ldots$ & $2.6\leqslant\theta_9\leqslant3.0000\ldots$ & \\ \hline
+		10 &$2.6363\ldots\leqslant\theta_{10}\leqslant3.8000\dots$ &$2.6363\ldots\leqslant\theta_{10}\leqslant3.5186\dots$ &  $*$  \\ \hline
+		11 &$2.6666\ldots\leqslant\theta_{11}\leqslant3.0000\dots$ &$2.6666\ldots\leqslant\theta_{11}\leqslant3.0000\dots$   & \\ \hline
+		12 & $2.6923\ldots\leqslant\theta_{12}\leqslant3.4000\dots$& $2.6923\ldots\leqslant\theta_{12}\leqslant3.4000\dots$  & \\ \hline
+	\end{tabular}
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%
+\begin{frame}{}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|} \hline
+		n& Известные оценки $\theta_n$ & Уточненные оценки $\theta_n$  & \\ \hline
+
+
+				13 & $2.7142\ldots\leqslant\theta_{13}\leqslant3.7692\dots$ &$2.7142\ldots\leqslant\theta_{13}\leqslant3.7692\dots$  & \\ \hline
+				14 &$2.7333\ldots\leqslant\theta_{14}\leqslant4.1999\dots$ & $2.7333\ldots\leqslant\theta_{14}\leqslant4.0156\dots$ &  $*$ \\ \hline
+				15 & $2.75\ldots\leqslant\theta_{15}\leqslant3.5\dots$ &  $2.75\ldots\leqslant\theta_{15}\leqslant3.5\dots$ & \\ \hline
+				16 & $2.7647\ldots\leqslant\theta_{16}\leqslant4.2000\dots$ & $2.7647\ldots\leqslant\theta_{16}\leqslant4.2000\dots$ & \\ \hline
+				17 &$2.7777\ldots\leqslant\theta_{17}\leqslant4.0882\dots$ & $2.7777\ldots\leqslant\theta_{17}\leqslant4.0882\dots$ &  \\ \hline
+				18 &$2.7894\ldots\leqslant\theta_{18}\leqslant5.5882\dots$ & $2.7894\ldots\leqslant\theta_{18}\leqslant5.1401\dots$ &  $*$\\ \hline
+				19 &$2.8\leqslant\theta_{19}\leqslant4.0000\dots$ & $2.8\leqslant\theta_{19}\leqslant4.0000\dots$ & \\ \hline
+				20 &$2.8095\ldots\leqslant\theta_{20}\leqslant4.7241\dots$ & $2.8095\ldots\leqslant\theta_{20}\leqslant4.6888\dots$ &  $*$ \\ \hline
+
+	\end{tabular}
+\end{center}
+
+\end{frame}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\end{document}
+
+
