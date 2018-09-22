@@ -1,0 +1,121 @@
+\documentclass[12pt]{article} % Класса article хватит для курсовой и диплома 
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[T2A,T1]{fontenc}
+\usepackage{amsmath} % Пакет специальных символов
+\usepackage{amsfonts} 
+\usepackage{amssymb} % Этих пакетов хватает для набора большинства спецсимволов 
+\usepackage{graphicx} % Графика
+\usepackage{hyperref} % Навигация по ссылкам в документе % Продвинутое цитирование
+\usepackage{cite}
+\usepackage{color} %% это для отображения цвета в коде
+\usepackage{listings} %% собственно, это и есть пакет listings
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{indentfirst}
+
+\newtheorem{Def}{Определение}
+\newtheorem{Def2}{Утверждение}
+\graphicspath{}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\DeclareCaptionFont{white}{\color{white}} %% это сделает текст заголовка белым
+%% код ниже нарисует серую рамочку вокруг заголовка кода.
+\DeclareCaptionFormat{listing}{\colorbox{black}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage[a4paper, top=20mm, left=30mm, right=20mm, bottom=20mm]{geometry} % Поля
+
+\title{Алгоритм восстановления невыпуклой триангулированной поверхности по облаку точек}
+\author{Artem.Lyutenkov }
+\date{May 2017}
+
+% новая команда \RNumb для вывода римских цифр
+\newcommand{\RNumb}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\begin{document}
+	
+	\begin{titlepage} 
+		\begin{center}
+			\large
+			\textbf{МИНОБРНАУКИ РОССИИ}
+			
+			
+			\vspace{0.5cm}
+			
+			\textbf{Федеральное государственное бюджетное образовательное}
+			
+			\textbf{учреждение высшего образования}
+			
+			\textbf{«Ярославский государственный университет им. П.Г. Демидова»}
+			\vspace{0.25cm}
+			
+			
+			Кафедра математического анализа
+			\vfill
+			
+			Выпускная квалификационная работа \\
+			\textbf{Нормы интерполяционных проекторв и экстремальные симплексы } \\
+			(Направление 01.03.02 Прикладная математика и информатика) 
+			\vfill
+			
+			
+			\bigskip
+			
+			
+		\end{center}
+		
+		\begin{flushright}
+			Научный руководитель\\
+			Ухалов А.Ю. \hspace{0.1cm}  \underline{\hspace{2cm}}\\
+			\small(подпись)\\
+			«\underline{\hspace{0.5cm}}» \underline{\hspace{1.5cm}} 20 \underline{\hspace{0.2cm}} г.\\
+			Студент группы ПМИ-41БО\\
+			Лютенков А.В. \hspace{0.1cm}  \underline{\hspace{2cm}}\\
+			\small(подпись)\\
+			«\underline{\hspace{0.5cm}}» \underline{\hspace{1.5cm}} 20 \underline{\hspace{0.2cm}} г.\\
+		\end{flushright}
+		\begin{center}
+			Ярославль, 2018 г.
+		\end{center}
+	\end{titlepage}
+	\tableofcontents \thispagestyle{empty}
+	\newpage
+	\setcounter{page}{3}
+	
+	
+
+
+\newpage
+\section{Задача линейной интерполяции на n-мерном кубе}\label{s1}
+$Q_ n:= [0..1]^n$, где $n \in \mathbb{R}^n$, $Q_ n$ - n-мерный куб. Положим S - невырожденный сиплекс в $\mathbb{R}^n$, вершины симплекса зададим через $x^{(j)} = (x_1^{(j)},...,x_n^{(j)})$. 
+ $$Матрица A := {\begin{pmatrix}
+		x_1^{(1)}& \dots & x_n^{(1)}& 1\\
+		\vdots & \ddots & \vdots & \vdots \\
+		x_1^{(n+1)}& \dots & x_n^{(n+1)}&  1
+\end{pmatrix}}$$
+Скажем, что набор точек $x^{(j)}$ --- допустим для интерполяции многочленами из $\Pi_1(\mathbb{R}^n)$. Это условие эквивалентно тому, что
+матрица A является невырожденной.  
+\newline
+$\Delta := det(A)$, определитель, который получается  из  $\Delta$ заменой j-й строки на строку $(x_1, \dots, x_n, 1)$. Многочленый $\lambda_j(x) := \Delta_j(x)/\Delta$ из $\Pi_1(\mathbb{R}^n)$ являются базисными многочленами Лагранжа симплекса S. $\lambda_j = l_{1j}x_1 + \dots + l_{nj}x_n + l_{n+1j}$, коэффициентны $l_{ij}$ составляют столбцы $A^{-1}$.
+\newline
+Так как $det(A) \neq 0 $, то для любой  $f \in C(Q_n)$, где $C(Q_n)$ --- совокупность $f : Q_n \rightarrow \mathbb{R}$ найдется единственный многочлен $p \in \Pi_1(\mathbb{R}^n	)$ удовлетворяющий условиям \newline $p(x^{(j)}) = f(x{(j)})$.
+\subsection{Норма интерполяционного проектора}
+Введем в рассмотрение оператор $P : C(Q_n)  \rightarrow \Pi_1(\mathbb{R}^n)$, который далее будем называть интеполяционным проектором. Интерполяционный проектор по системе узлов $x^{(j)}$ определяется с помощью равенств: \newline
+\begin{center}$Pf(x^{(j)}) = fj := f(x^{(j)}), j = 1,\dots, n+1$ \end{center}
+
+Эти равенства показывает, что данный оператор является линейным и справедлив следующий аналог интерполяционной формулы Лагранжа: \newline
+\begin{center}$Pf(x^{(j)}) = p(x) = \sum\limits_{j=1}^{n+1} f_j\lambda_j(x) $\end{center}
+Обозначим $||P||$ норму оператора Р. Эта виличина зависит от от узлов $x^{(j)}$. Обозначим через $\theta_n$ минимальну норму проектора, при условии, что все узлы принадлежат кубу $Q_n$:
+\begin{center}$\theta_n := \min\limits_{x^{(j)} \in Q_n}||P||$ \end{center} 
+
+	
+
+	\newpage
+	% даём указание на включение данного место в оглавление как секции (\section)
+	\addcontentsline{toc}{section}{Список используемой литературы}
+	\begin{thebibliography}{}
+		\bibitem{link1}H. Edelsbrunner and E. P. Mucke. Three-dimensional alpha shapes. ACM Trans. Graph., 13(1):43–72, January 1994.
+		\bibitem{link2}Thomas Lafarge and Beatriz Pateiro-Lopez. Implementation of the 3D Alpha-Shape for the Reconstruction of 3D Sets from a Point Cloud, 2016
+		
+	\end{thebibliography}
+	\newpage
+\end{document}

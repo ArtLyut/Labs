@@ -1,0 +1,26 @@
+Performing C++ SOURCE FILE Test COMPILER_SUPPORTS_CXX11 succeeded with the following output:
+Change Dir: /Users/artem/Documents/диплом/dlib/dlib-19.10/build-examples-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/dlib_build/cpp11_test_build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_824a8/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_824a8.dir/build.make CMakeFiles/cmTC_824a8.dir/build
+Building CXX object CMakeFiles/cmTC_824a8.dir/src.cxx.o
+/usr/bin/g++    -DCOMPILER_SUPPORTS_CXX11   -std=c++11 -o CMakeFiles/cmTC_824a8.dir/src.cxx.o -c "/Users/artem/Documents/диплом/dlib/dlib-19.10/build-examples-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/dlib_build/cpp11_test_build/CMakeFiles/CMakeTmp/src.cxx"
+Linking CXX executable cmTC_824a8
+/usr/local/Cellar/cmake/3.11.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_824a8.dir/link.txt --verbose=1
+/usr/bin/g++   -DCOMPILER_SUPPORTS_CXX11 -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_824a8.dir/src.cxx.o  -o cmTC_824a8 
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORTS_CXX0X succeeded with the following output:
+Change Dir: /Users/artem/Documents/диплом/dlib/dlib-19.10/build-examples-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/dlib_build/cpp11_test_build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_960cc/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_960cc.dir/build.make CMakeFiles/cmTC_960cc.dir/build
+Building CXX object CMakeFiles/cmTC_960cc.dir/src.cxx.o
+/usr/bin/g++    -DCOMPILER_SUPPORTS_CXX0X   -std=c++0x -o CMakeFiles/cmTC_960cc.dir/src.cxx.o -c "/Users/artem/Documents/диплом/dlib/dlib-19.10/build-examples-Desktop-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/dlib_build/cpp11_test_build/CMakeFiles/CMakeTmp/src.cxx"
+Linking CXX executable cmTC_960cc
+/usr/local/Cellar/cmake/3.11.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_960cc.dir/link.txt --verbose=1
+/usr/bin/g++   -DCOMPILER_SUPPORTS_CXX0X -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_960cc.dir/src.cxx.o  -o cmTC_960cc 
+
+Source file was:
+int main() { return 0; }

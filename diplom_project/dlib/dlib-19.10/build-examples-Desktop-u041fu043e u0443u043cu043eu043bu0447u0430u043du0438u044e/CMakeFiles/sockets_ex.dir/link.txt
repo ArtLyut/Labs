@@ -1,0 +1,1 @@
+/usr/bin/g++  -O3 -DNDEBUG -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/sockets_ex.dir/sockets_ex.cpp.o  -o sockets_ex dlib_build/libdlib.a /usr/local/lib/libpng.dylib /usr/lib/libz.dylib /usr/lib/libcblas.dylib /usr/lib/liblapack.dylib /usr/lib/libsqlite3.dylib 

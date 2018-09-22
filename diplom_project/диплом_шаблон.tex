@@ -1,0 +1,832 @@
+\documentclass[12pt]{article} %  ласса article хватит дл€ курсовой и диплома 
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[T2A,T1]{fontenc}
+\usepackage{amsmath} % ѕакет специальных символов
+\usepackage{amsfonts} 
+\usepackage{amssymb} % Ётих пакетов хватает дл€ набора большинства спецсимволов 
+\usepackage{graphicx} % √рафика
+\usepackage{hyperref} % Ќавигаци€ по ссылкам в документе % ѕродвинутое цитирование
+\usepackage{cite}
+\usepackage{color} %% это дл€ отображени€ цвета в коде
+\usepackage{listings} %% собственно, это и есть пакет listings
+\usepackage{bm}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}} %% это сделает текст заголовка белым
+%% код ниже нарисует серую рамочку вокруг заголовка кода.
+\DeclareCaptionFormat{listing}{\colorbox{black}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage[a4paper, top=25mm, left=30mm, right=10mm, bottom=25mm]{geometry} % ѕол€
+
+\title{¬ычисление геометрических характеристик симплекса}
+\author{Yury.Dubov}
+\date{May 2017}
+
+\begin{document}
+	\begin{titlepage}
+		 \begin{center}
+			\large
+			\textbf{ћ»ЌќЅ–Ќј” » –ќ——»»}
+			
+			
+			\vspace{0.5cm}
+			
+		\textbf{'едеральное государственное бюджетное образовательное'}
+		
+		\textbf{учреждение высшего образовани€}
+		
+		\textbf{Ђярославский государственный университет им. ѕ.√. ƒемидоваї}
+			\vspace{0.25cm}
+			
+			
+			 афедра математического анализа
+			\vfill
+			
+			 урсова€ работа \\
+			\textbf{¬ычисление геометрических характеристик симплекса} \\
+			(—пециальность 01.03.02 ѕрикладна€ математика и информатика) 
+			\vfill
+			
+			
+			\bigskip
+			
+			
+		\end{center}
+
+\begin{flushright}
+Ќаучный руководитель\\
+\underline{\hspace{5cm}}\\
+ \small(степень, звание)\\
+ \underline{\hspace{2.5cm}} \hspace{0.1cm}  \underline{\hspace{2.5cm}}\\
+ \small(подпись,‘»ќ)\\
+ Ђ\underline{\hspace{0.5cm}}ї \underline{\hspace{1.5cm}} 20 \underline{\hspace{0.2cm}} г.\\
+ —тудент группы ѕћ»-31Ѕќ\\
+ \underline{\hspace{2.5cm}} \hspace{0.1cm}  \underline{\hspace{2.5cm}}\\
+ \small(подпись,‘»ќ)\\
+ Ђ\underline{\hspace{0.5cm}}ї \underline{\hspace{1.5cm}} 20 \underline{\hspace{0.2cm}} г.\\
+\end{flushright}
+		\begin{center}
+			ярославль, 2017 г.
+		\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\section{¬ведение}
+
+\subparagraph{}¬ данной курсовой работе, с помощью программы написанной на €зыке $C\#$, будут вычислены некоторые геометрические характеристики симплексов. 
+\subparagraph{}ѕусть $n \in N$, элемент $x \in R^{n}$ будем записывать в виде $x = (x_1, \dots, x_n)$. „ерез $e_1, \dots , e_n$ обозначаетс€ канонический базис $R^{n}$; cчитаем $e := (1,\dots, 1)$. ƒл€ $x \in R^{n}$ через $\|x\|$ ниже обозначаетс€ обычна€ евклидова норма $x$:
+	
+	\begin{equation*}
+	\|x\|:= ({\sum_{i=1}^n x_i^{2}})^{1/2}.
+	\end{equation*}
+
+	\subparagraph{}ѕусть $C$ Ч выпуклое тело в $R^n$, т. е. компактное выпуклое подмножество $R^n$ с непустой внутренностью. 
+	\subparagraph{}„ерез $\sigma C$ обозначим результат гомотетии $C$ относительно центра т€жести с коэффициентом $\sigma$. Ѕудем говорить, что n-мерный симплекс описан вокруг выпуклого тела $C$, если кажда€ (n-1)-мерна€ грань этого симплекса содержит точку $C$. ѕримем по определению, что выпуклый многогранник вписан в $C$, если люба€ его вершина принадлежит границе $C$.
+	
+	\newtheorem{Def}{ќпределение}
+	\begin{Def} —имплекс(размерности n) --- это выпукла€ оболочка $n+1$ точки аффинного пространства, которые предполагаютс€ аффинно независимыми (то есть не лежат в подпространстве размерности $n-1$). Ёти точки называютс€ вершинами симплекса.
+	\end{Def}
+	
+	\subparagraph{} ѕусть $S$ Ч невырожденный симплекс в $R^n$: ќбозначим вершины $S$ через $x^{(j)}:=\{x_1^{(j)},\dots,x_n^{(j)}\}$, $j=1,\dots,n+1$. ћатрица $A$ €вл€етс€ невырожденной:
+	
+	\begin{equation}\label{f1}
+		A :=
+		\begin{pmatrix}
+			x_1^{(1)} & \dots & x_n^{(1)} & 1 \\
+			x_1^{(2)} & \dots & x_n^{(2)} & 1 \\
+			\vdots  & \dots  & \dots  & \vdots \\
+			x_1^{(n+1)} & \dots & x_n^{(n+1)} & 1
+		\end{pmatrix}
+	\end{equation}
+	
+	
+	\subparagraph{} ќбозначим через $\Delta_j(x)$ опpеделитель, который получаетс€ из $\Delta$ заменой $j$-й строки на строку $(x_1,\dots, x_n, 1)$. –ассмотрим многочлены $\lambda_j(x) := \Delta_j(x)/\Delta$ из $\Pi_1(R^n)$, они обладают свойством $\lambda_j(x(k)) = \delta_j^k$ (здесь $\delta_j^k$ Ч символ  ронекера).  оэффициенты $\lambda_j$ составл€ют $j$-й столбец обратной к $A$ матрице $A^{-1}$: ¬ дальнейшем считаем $A^{-1} = (l_{ij})$, иначе говор€,
+	
+	\begin{equation}\label{f2}
+		\lambda_j(x) = l_{1,j}x_1 + \dots + l_{n,j}x_{n} + l_{n+1,j}.
+	\end{equation}
+	
+	\newtheorem{Def2}[Def]{ќпределение}
+	\begin{Def2}ƒл€ выпуслого тела $—$ обозначим через $d_i(C)$ максимальную длину отрезка, содержащегос€ в $C$ и параллельного оси $x_i$ и будем называть $i$-м осевым диаметром $C$.
+	\end{Def2}
+	
+	\newtheorem{Def5}[Def]{ќпределение}
+	\begin{Def5}
+		ѕусть $S$ --- невырожденный симплекс, $C$ --- выпуклое тело в $R^n$. ¬ведЄм в рассмотрение величину
+	\end{Def5}
+	
+	\begin{equation}\label{f9}
+	\xi(C, S):=\min \{\sigma \geq 1:\ C \subset \sigma S\}.
+	\end{equation}
+	
+	\subparagraph{} ѕоложим $\xi (S):=\xi (Q_n;S)$. ќчевидно, $\xi(C; S)=1$ тогда и только тогда, когда $C \subset S$.
+	
+	\newtheorem{Def6}[Def]{ќпределение}
+	\begin{Def6}
+		ѕусть $C=Q_n$, S --- невырожденный $n$-мерный симплекс. ¬ведЄм в рассмотрение характеристику
+		\begin{equation}\label{f11}
+			\xi_n = \min \{\xi(S):\ S \subset Q_n\}.
+		\end{equation}
+	\end{Def6}	 
+	
+	»так, целью данной работы €вл€етс€ вычисление таких характеристик симплекса, как $\xi (S)$ и $\xi_n$. ќ том, как они вычисл€ютс€, будет более подробно изложенно в следующих главах работы.
+	
+	\newpage
+	
+	
+	
+	
+	
+	
+	\section{¬еличина $\xi (C; S)$}   	
+	\newtheorem{Th}{“еорема}
+	\begin{Th}ѕусть $C \not \subset S$ и $1 \leq j \leq n$. ѕредположим, что j-€ $(n-1)$-мерна€ грань симплекса
+	$\xi(C, S)S$ (параллельна€ грани $S$ c уравнением $\lambda_j(x)=0$) содержит точку $C$. “огда
+		
+		\begin{equation}\label{f10}
+		\xi(C, S) = (n+1) \max_{x \in C} (-\lambda_j(x)) + 1.
+		\end{equation}
+	\end{Th}
+	
+	\newtheorem{Th2}{—ледствие}
+	\begin{Th}ѕусть $S$ --- невырожденный симплекс, $C$ --- выпуклое тело в $R^n$. ѕредположим $C \not \subset S$. ≈сли симплекс $\xi(S)S$ описан вокруг $C$, то
+		
+		\begin{equation}\label{theorem2}
+		    \max_{x \in C} (-\lambda_1(x))=\dots=\max_{x \in C} (-\lambda_{n+1}(x))
+		\end{equation}
+	\end{Th}
+	
+	\newtheorem{Th3}[Th]{“еорема}
+	\begin{Th3}ѕусть $S$ --- невырожденный симплекс, $C$ --- выпуклое тело в $R^n$ и $C \not \subset S$, тогда 
+		
+		\begin{equation}\label{theorem3}
+		\xi(C, S) = (n+1) \max_{1\leqslant k \leqslant n+1} \max_{x \in C} (-\lambda_k(x)) + 1.
+		\end{equation}
+	\end{Th3}
+	
+	ќтдельно остановимс€ на случае $C = Q_n$. ћногочлен из $\Pi_1(R^n)$ принимает минимальное и максимальное значени€ на $Q_n$ в вершинах куба. ¬ св€зи с этим в соотношени€х насто€щего пункта величина $max_C(-\lambda_j)$ при $C=Q_n$ может быть заменена на равную величину $\max_{ver(Q_n)}(-\lambda_j)$. ¬ частности, равенство (\ref{theorem3}) принимает вид
+	
+    \begin{equation}\label{ksiVer}
+		\xi(C, S) = (n+1) \max_{1\leqslant k \leqslant n+1} \max_{x \in ver(Q_n)} (-\lambda_k(x)) + 1.
+	\end{equation}
+	а условие (\ref{theorem2}) сводитс€ к соотношению
+	
+	\begin{equation}\label{f10}
+	    \max_{x \in ver(Q_n)} (-\lambda_1(x))=\dots=\max_{x \in ver(Q_n)} (-\lambda_{n+1}(x))
+	\end{equation}
+
+    Ќапомню, что
+    $$\xi_n = \min \{\xi(S):\ S \subset Q_n\}.$$
+	√де $C=Q_n$, S --- невырожденный $n$-мерный симплекс. 
+	
+	\subparagraph{}—тоит упом€нуть, что были найдены точные значени€ $\xi_n$ дл€ случаев $n = 1, 2, 3$ и соответствующие им симплексы.
+	
+	\subparagraph{}ѕри $n = 1\ \xi_1 = 1$. ƒл€ любого проектора существует 1-вершина $Q_1$ относительно соответствующего симплекса (который в этой ситуации €вл€етс€ отрезком).
+	
+	\subparagraph{}ѕри $n = 2\ \xi_2 = \dfrac{3\sqrt{5}}{5} + 1$, причем симплекс, соответствующий $\xi_2$, обладает интересным свойством: его одномерные грани(стороны треугольника) отсекают от квадрата треугольники равных площадей.
+	
+	\subparagraph{}ѕри $n = 3\ \xi_3 = 3$, причЄм существует только два симплекса, которым соответствует $\xi_3$, и что интересно, их двумерные грани(плоскости, ограничивающие симплекс) отсекают от куба фигуры равных объЄмов.
+	\newpage
+
+
+
+
+
+
+
+\section{–абота программы}
+\subparagraph{}ќписание работы программы стоит разделить на две части. ѕерва€ будет рассказывать о нахождении $\xi(S)$, по заданным координатам вершин соответствующего симплекса. ¬тора€ опишет процесс нахождени€ $\xi_n$ по заданной размерности $n$.
+јлгоритм первой части рассмотрим на примере. »так, n-мерный симплекс задаЄтс€ через n+1 точку n-мерного пространства. «анесЄм данные в матрицу, как показано в (\ref{f1}), в результате получаем  (\ref{pr1})
+\begin{equation}\label{pr1}
+		A :=
+		\begin{pmatrix}
+			0 & 0 & 1 \\
+			0 & 1 & 1 \\
+			1 & 0.5 & 1
+		\end{pmatrix}
+\end{equation}
+ƒалее дл€ (\ref{pr1}) находим обратную матрицу.
+\begin{equation}\label{pr2}
+		A^{-1} :=
+		\begin{pmatrix}
+			-0.5 & -0.5 & 1 \\
+			-1 & 1 & 0 \\
+			1 & 0 & 0
+		\end{pmatrix}
+\end{equation}
+—оставим базисные многочлены Ћагранжа:
+$$\lambda_1(x)=-0.5x_1-x_2+1$$
+$$\lambda_2(x)=-0.5x_1+x_2$$
+$$\lambda_3(x)=1$$
+¬оспользуемс€ формулой (\ref{ksiVer}), где $C=Q_n$. ќчевидно, что $-\lambda_j(x)$ достигает своего максимума в точке $x=(x_1,x_2,\dots,x_n)$, где
+\begin{equation*}
+x_i = 
+ \begin{cases}
+   1, &\text{если $-l_{i,j}>0$}\\
+   0, &\text{если $-l_{i,j}\le0$}
+ \end{cases}
+\end{equation*}
+ƒл€ нашего примера имеем:
+$$\max(-\lambda_1(x))=0.5 \text{при} x_1=x_2=1$$
+$$\max(-\lambda_2(x))=0.5 \text{при} x_1=1, x_2=0$$
+$$\max(-\lambda_3(x))=0 \text{при} x_1=0$$
+‘ормула (\ref{ksiVer}) даЄт $\xi(S)=3*0.5+1=2.5$
+ѕроцесс выполнени€ программы практически ничем не отличаетс€ от описанного выше алгоритма.
+
+\subparagraph{}¬тора€ часть программы занимаетс€ приближЄнным вычислением $\xi_n$, путЄм условно-полного перебора всех n-мерных симплексов в $Q_n$. ”словность заключаетс€ в том, что на самом деле перебираютс€ не все возможные симплексы, коих несчЄтное множество, а с некоторым малым шагом. т.е. кажда€ координата каждой вершины симплекса мен€етс€ в диапазоне от 0 до 1 с шагом в 0.001, и дл€ каждого такого симплекса находитс€ $\xi(S)$ по вышеуказанной процедуре. ѕосле чего по формуле (\ref{f11}) выбираетс€ минимальный $\xi(S)$. “ак, например, $\xi_2 = 2,3418\dots$, а $\xi_3 = 3$. 
+
+
+
+\newpage
+\section{«аключение}
+¬ данной работе поднимаетс€ така€ актуальна€ проблема в математике, как изучение геометрических характеристик симплекса - $\xi(S)$ и $\xi_n$. Ѕыли повторно вычислены $\xi_2$ и $\xi_3$. ¬ычисление $\xi_n$ при большем $n$ затруднительно, из-за необходимости перебора огромного количества вариантов, хот€ это и возможно. „то касаетс€ вычислени€ $\xi(S)$, то даже при достаточно больших $n$, врем€ выполнени€ программы будет мало.
+
+\newpage
+% даЄм указание на включение данного место в оглавление как секции (\section)
+\addcontentsline{toc}{section}{—писок используемой литературы}
+\begin{thebibliography}{}
+	\bibitem{link1} ћ.¬.Ќевский - √еометрические оценки в полиномиальной интерпол€ции. ярославль, 2012г.
+	\bibitem{link1} “роелсен Ё. - язык программировани€ C$\#$ 5.0 и платформа .NET 4.5. 2015г.
+\end{thebibliography}
+
+
+\newpage
+\section{ѕриложение}
+\begin{verbatim}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Matrix
+{
+    class Simplex
+    {
+        int size;//n характеристика
+        public Matrix matrix;
+        public Matrix array;//та же сама€ матрица, но без столбца единиц
+        public int Size { get { return size; } }
+
+        public Simplex(Simplex simplex)
+        {
+            size = simplex.Size;
+            this.matrix = new Matrix(size + 1, size + 1);            
+            this.array = new Matrix(size + 1, size);
+            
+            for (int i = 0; i < size + 1; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    this.matrix.array[i, j] = simplex.matrix.array[i, j];
+                    this.array.array[i, j] = simplex. matrix.array[i, j];
+                }
+                this.matrix.array[i, size] = simplex.matrix.array[i, size];
+            }
+        }
+
+        public Simplex(Matrix matrix)//конструктор
+        {
+            if(matrix.Row!=matrix.Column+1)
+            {
+                throw new Exception("ћатрица не подходит");
+            }
+            this.matrix = new Matrix(matrix.Row, matrix.Column + 1);
+            this.array = new Matrix(matrix.Row, matrix.Column);
+            size = matrix.Column;
+            for(int i = 0; i<size + 1; i++)
+            {
+                for(int j = 0; j<size; j++)
+                {
+                    this.matrix.array[i, j] = matrix.array[i, j];
+                    this.array.array[i, j] = matrix.array[i, j];
+                }
+                this.matrix.array[i, size] = 1;
+            }
+        }
+
+        public Decimal LambdaMax()
+        {
+            Matrix inverseMatrix = new Matrix(this.matrix.Inverse());
+            Decimal[] lambda_i = new Decimal[size+1];
+            for (int i = 0; i <= size; i++)
+                lambda_i[i] = 0;
+            //находим максимальное значение дл€ -Ћ€мбда_i 
+            for (int j=0; j<=size;j++)
+            {
+                for (int i=0; i<size; i++)
+                {
+                    if(inverseMatrix.array[i,j]<0)
+                    {
+                        lambda_i[j] -= inverseMatrix.array[i, j];
+                    }
+                }
+                lambda_i[j] -= inverseMatrix.array[size, j];
+            }
+            return lambda_i.Max();
+        }
+
+
+        public Decimal Ksi()
+        {
+            decimal lambda = LambdaMax();
+            return (size + 1) * lambda + 1;
+        }
+
+
+        //обновл€ет матрицу симплекса на новую
+        public void RefreshMatrix(Matrix matr) 
+        {
+            if (matr.Row != matr.Column + 1 && matr.Row != this.matrix.Row)
+            {
+                throw new Exception("ћатрица не подходит");
+            }
+            for (int i = 0; i < size + 1; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    this.matrix.array[i, j] = matr.array[i, j];
+                    this.array.array[i, j] = matr.array[i, j];
+                }
+                this.matrix.array[i, size] = 1;
+            }
+        }
+        
+        //обновл€ет матрицу симплекса на новую 
+        public void RefreshMatrix(Decimal[,] Array)
+        {
+            Matrix newMatrix =
+                new Matrix(this.matrix.Row, this.matrix.Column-1, Array);
+            RefreshMatrix(newMatrix);
+        }
+
+
+    }
+}
+
+\end{verbatim}
+
+\begin{verbatim}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace Matrix
+{
+    class Simplex_n
+    {
+        int size;//n характеристика(размер пространства)
+        public int Size
+        {
+            get { return size; }
+            set { size = value; }
+        }
+
+        public Simplex_n(int Size)
+        {
+            size = Size;
+        }
+
+        //провер€ет на наличие 0 и 1
+        public bool CheckHave1Or0(Decimal[] point)
+        {
+            for (int i = 0; i < size; i++)
+                if (point[i] == 0 || point[i] == 1.000m)
+                    return true;
+            return false;
+        }
+        
+        //по точке возвращает следующую
+        public Decimal[] NewPoint(Decimal[] point)
+        {
+            Decimal[] newPoint = new Decimal[size];
+            for (int i = 0; i < size; i++)
+                newPoint[i] = point[i];
+            int j = size - 1;
+
+            while (j >= 0)
+            {
+                if (newPoint[j] <= 0.999m)
+                {
+                    newPoint[j] += 0.001m;
+                    return newPoint;
+                }
+                /*уменьшаем j до тех пор,
+                пока нельз€ будет прибавить 0,001*/
+                while (j >= 0 && newPoint[j] > 0.999m) 
+                {
+                    j--;
+                }
+                /*можем увеличить j-ую координату на 0,001*/
+                for (int k = j + 1; k < size; k++)
+                    newPoint[k] = 0;
+            }
+            return point;
+            //возвращаем саму точку, если не можем перейти к следующей.
+            //т.е. вектор уже из всех единиц
+        }
+
+        //получени€ следующей матрицы, зна€ предыдущую
+        public Decimal[,] NextMatrix(Decimal[,] Matrix, int Row)
+        {
+            Matrix matr = new Matrix(Row, Row - 1, Matrix);
+            int k = Row;//индекс на единицу больше последней строки
+            Decimal[] tmp; //текуща€ строка
+            Decimal[] nextTmp;
+            do
+            {
+                k--;
+                tmp = matr.GetRow(k);
+                nextTmp = NewPoint(tmp);
+                while(!CheckHave1Or0(nextTmp))
+                    nextTmp = NewPoint(nextTmp);
+            }
+            //ищем строку, которую можно преобразовать в следующую
+            while (k > 0 && Comparison(tmp, nextTmp));
+
+            //если строчку можно преобразовать
+            if (!Comparison(tmp, nextTmp))
+            {
+                matr.SetRow(k, nextTmp);
+                for (int i = k + 1; i < Row; i++)
+                    for (int j = 0; j < Row - 1; j++)
+                        matr.array[i, j] = 0m;
+            }
+            return matr.array;
+        }
+
+        //проверка на равенство двух массивов
+        public bool Comparison(Decimal[] m1, Decimal[] m2)
+        {
+            if (m1.Length != m2.Length)
+                return false;
+            int i = 0;
+            while (i < m1.Length)
+            {
+                if (m1[i] != m2[i])
+                    return false;
+                i++;
+            }
+            return true;
+        }
+        
+        //проверка на равенство двух матриц
+        public bool Comparison(Matrix m1, Matrix m2)
+        {
+            if (m1.Row != m2.Row || m1.Column != m2.Column)
+                return false;
+            for (int i = 0; i < m1.Row; i++)
+                for (int j = 0; j < m1.Column; j++)
+                    if (m1.Array[i, j] != m2.Array[i, j])
+                        return false;
+            return true;
+        }
+
+        //проверка на то, что достигли конца перебора матриц
+        public bool CheckOnFinish(Simplex simplex)
+        {
+
+            for (int i = 0; i < simplex.array.Row; i++)
+                for (int j = 0; j < simplex.array.Column; j++)
+                    if (simplex.array.array[i, j] != 1.000m)
+                        return false;
+
+            return true;
+        }
+        
+        //пропускаем те симплексы, у которых не можем посчитать кси
+        public void Skip(ref Simplex sim)
+        {
+            while (sim.matrix.Determinant() == 0)
+            {
+                sim.RefreshMatrix(NextMatrix(sim.matrix.Array, sim.matrix.Row));
+                if (CheckOnFinish(sim))
+                    break;
+            }
+        }
+
+        public Decimal Ksi_n()
+        {
+            Decimal[,] array = new Decimal[size + 1, size];
+            for(int i = 0; i < size+1; i++)
+                for(int j = 0; j < size; j++)
+                    array[i, j] = 0m;
+            Matrix matrix = new Matrix(size + 1, size, array);
+            Simplex sim = new Simplex(matrix);
+
+            Skip(ref sim);
+            Decimal minKsi = sim.Ksi();
+            Decimal ksi;
+
+            sim.RefreshMatrix(NextMatrix(sim.matrix.Array, sim.matrix.Row));
+            Skip(ref sim);
+
+            do
+            {
+                ksi = sim.Ksi();
+                if (ksi < minKsi)
+                    minKsi = ksi;
+
+                sim.RefreshMatrix(NextMatrix(sim.matrix.Array, sim.matrix.Row));
+                Skip(ref simplex);
+            }
+            while (!CheckOnFinish(sim));
+            return minKsi;
+        }
+
+    }
+}
+
+\end{verbatim}
+
+\begin{verbatim}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Matrix
+{
+    public class Matrix
+    {
+        static Random rnd = new Random();
+
+        public Decimal[,] array;
+        int row, column;
+
+        public Decimal[,] Array
+        {
+            get { return array; }
+            set { array = value; }
+        }
+
+        public int Row { get { return row; } }
+
+        public int Column { get { return column; } }
+
+        public Matrix(int row, int column, Decimal [,] array)
+        {
+            this.row = row;
+            this.column = column;
+            this.array = new Decimal[row, column];
+            for(int i = 0; i<row; i++)
+                for(int j = 0; j<column; j++)
+                {
+                    this.array[i, j] = array[i, j];
+                }
+        }
+        public Matrix(int row, int column)
+        {
+            this.row = row;
+            this.column = column;
+            array = new Decimal[row, column];
+        }
+        public Matrix(Matrix matrix)
+        {
+            this.column = matrix.Column;
+            this.row = matrix.Row;
+            this.array = new Decimal[row, column];
+            for (int i = 0; i < row; i++)
+                for (int j = 0; j < column; j++)
+                {
+                    this.array[i, j] = matrix.array[i, j];
+                }
+        }
+
+        public void Random()
+        {
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    array[i, j] = rnd.Next(10);
+                }
+            }
+        }
+
+        public void Random(int min, int max)
+        {
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    array[i, j] = rnd.Next(min, max);
+                }
+            }
+        }
+
+        public Matrix Transpose()
+        {
+            Matrix m = new Matrix(column, row);
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    m.array[j, i] = array[i, j];
+                }
+            }
+
+            return m;
+        }
+
+        public void TransposeMyself()
+        {
+            array = Transpose().array;
+        }
+
+        public Matrix Inverse()
+        {
+            Decimal det = Determinant();
+            if (det == 0)
+            {
+                throw new Exception("ћатрица вырождена");
+            }
+
+            Matrix m = new Matrix(row, column);
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    m.array[i, j] = Cofactor(array, i, j) / det;
+                }
+            }
+
+            return m.Transpose();
+        }
+
+        public Decimal Determinant()
+        {
+            if (column != row)
+            {
+                throw new Exception("–асчет определител€ невозможен");
+            }
+            return Determinant(array);
+        }
+
+        private Decimal Determinant(Decimal[,] array)
+        {
+            int n = (int)Math.Sqrt(array.Length);
+
+            if (n == 1)
+            {
+                return array[0, 0];
+            }
+
+            Decimal det = 0;
+
+            for (int k = 0; k < n; k++)
+            {
+                det += array[0, k] * Cofactor(array, 0, k);
+            }
+
+            return det;
+        }
+
+        private Decimal Cofactor(Decimal[,] array, int row, int column)
+        {
+            return Convert.ToDecimal(Math.Pow(-1, column + row)) * 
+                                Determinant(Minor(array, row, column));
+        }
+
+        private Decimal[,] Minor(Decimal[,] array, int row, int column)
+        {
+            int n = (int)Math.Sqrt(array.Length);
+            Decimal[,] minor = new Decimal[n - 1, n - 1];
+
+            int _i = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (i == row)
+                {
+                    continue;
+                }
+                int _j = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if (j == column)
+                    {
+                        continue;
+                    }
+                    minor[_i, _j] = array[i, j];
+                    _j++;
+                }
+                _i++;
+            }
+            return minor;
+        }
+
+        public Decimal[] GetRow(int IndexRow)
+        {
+            Decimal[] resault = new Decimal[column];
+            for(int i = 0; i < column; i++)
+            {
+                resault[i] = array[IndexRow, i];
+            }
+            return resault;
+        }
+
+        public bool SetRow(int IndexRow, Decimal[] Row)
+        {
+            if (column != Row.Length || IndexRow < 0 || IndexRow > row - 1)
+                return false;
+            for(int i = 0; i < column; i++)
+            {
+                array[IndexRow, i] = Row[i];
+            }
+            return true;
+        }
+
+        public static Matrix operator +(Matrix m1, Matrix m2)
+        {
+            if (m1.row != m2.row || m1.column != m2.column)
+            {
+                throw new Exception("—ложение невозможно");
+            }
+
+            Matrix m = new Matrix(m1.row, m1.column);
+
+            for (int i = 0; i < m1.row; i++)
+            {
+                for (int j = 0; j < m1.column; j++)
+                {
+                    m.array[i, j] = m1.array[i, j] + m2.array[i, j];
+                }
+            }
+
+            return m;
+        }
+
+        public static Matrix operator -(Matrix m1, Matrix m2)
+        {
+            if (m1.row != m2.row || m1.column != m2.column)
+            {
+                throw new Exception("¬ычитание невозможно");
+            }
+
+            Matrix m = new Matrix(m1.row, m1.column);
+
+            for (int i = 0; i < m1.row; i++)
+            {
+                for (int j = 0; j < m1.column; j++)
+                {
+                    m.array[i, j] = m1.array[i, j] - m2.array[i, j];
+                }
+            }
+
+            return m;
+        }
+
+        public static Matrix operator *(Matrix m1, Matrix m2)
+        {
+            if (m1.column != m2.row)
+            {
+                throw new Exception("”множение невозможно");
+            }
+
+            Matrix m = new Matrix(m1.row, m2.column);
+
+            for (int i = 0; i < m1.row; i++)
+            {
+                for (int j = 0; j < m2.column; j++)
+                {
+                    decimal sum = 0;
+
+                    for (int k = 0; k < m1.column; k++)
+                    {
+                        sum += m1.array[i, k] * m2.array[k, j];
+                    }
+
+                    m.array[i, j] = sum;
+                }
+            }
+
+            return m;
+        }
+
+        public override string ToString()
+        {
+            string str = "";
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    str += array[i, j] + "\t";
+                }
+                str += "\n";
+            }
+
+            return str;
+        }
+    }
+}
+
+\end{verbatim}
+\end{document}
