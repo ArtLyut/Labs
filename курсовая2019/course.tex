@@ -1,0 +1,354 @@
+\documentclass[12pt]{article} % Класса article хватит для курсовой и диплома 
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[T2A,T1]{fontenc}
+\usepackage{amsmath} % Пакет специальных символов
+\usepackage{amsfonts} 
+\usepackage{amssymb} % Этих пакетов хватает для набора большинства спецсимволов 
+\usepackage{graphicx} % Графика
+\usepackage{hyperref} % Навигация по ссылкам в документе % Продвинутое цитирование
+\usepackage{cite}
+\usepackage{color} %% это для отображения цвета в коде
+\usepackage{listings} %% собственно, это и есть пакет listings
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{amsthm}
+\usepackage{blindtext} 
+\usepackage{fancyhdr} 
+\usepackage{graphicx} 
+\usepackage{ragged2e} 
+\usepackage{color}
+\usepackage{moreverb}
+\usepackage[noend]{algorithmic}
+\usepackage{listings}
+\usepackage{misccorr} % в заголовках появляется точка, но при ссылке на них ее нет 
+\usepackage{indentfirst} % после заголовков ставится абзацный отступ 
+
+\newtheorem{Def}{Определение}
+\newtheorem{Def2}{Утверждение}
+\graphicspath{}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\DeclareCaptionFont{white}{\color{white}} %% это сделает текст заголовка белым
+%% код ниже нарисует серую рамочку вокруг заголовка кода.
+\DeclareCaptionFormat{listing}{\colorbox{black}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage[a4paper, top=20mm, left=30mm, right=20mm, bottom=20mm]{geometry} % Поля
+
+\title{Применение алгоритмов условной оптимизации для вычисления минимальной нормы интерполяционного проектора}
+\author{Artem.Lyutenkov }
+\date{May 2019}
+
+% новая команда \RNumb для вывода римских цифр
+\newcommand{\RNumb}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\begin{document}
+
+	\begin{titlepage} 
+		 \begin{center}
+			\large
+			\textbf{МИНОБРНАУКИ РОССИИ}
+			
+			
+			\vspace{0.5cm}
+			
+		\textbf{Федеральное государственное бюджетное образовательное}
+		
+		\textbf{учреждение высшего образования}
+		
+		\textbf{«Ярославский государственный университет им. П.Г. Демидова»}
+			\vspace{0.25cm}
+			
+			
+			Кафедра математического анализа
+			\vfill
+			
+			Курсовая работа \\
+			\textbf{Применение алгоритмов условной оптимизации для вычисления минимальной нормы интерполяционного проектора} \\
+			(Магистерская программа <<Математическое моделирование и численные методы>> 01.04.02 Прикладная математика и информатика) 
+			\vfill
+			
+			
+			\bigskip
+			
+			
+		\end{center}
+
+\begin{flushright}
+Научный руководитель\\
+Ухалов А.Ю., к.ф.-м.н. \hspace{0.1cm}  \underline{\hspace{2cm}}\\
+ \small(подпись)\\
+ «\underline{\hspace{0.5cm}}» \underline{\hspace{1.5cm}} 20 \underline{\hspace{0.2cm}} г.\\
+ Студент группы ПМИ-11МО\\
+Лютенков А.В. \hspace{0.1cm}  \underline{\hspace{2cm}}\\
+ \small(подпись)\\
+ «\underline{\hspace{0.5cm}}» \underline{\hspace{1.5cm}} 20 \underline{\hspace{0.2cm}} г.\\
+\end{flushright}
+		\begin{center}
+			Ярославль, 2019 г.
+		\end{center}
+\end{titlepage}
+\tableofcontents \thispagestyle{empty}
+\setcounter{page}{3}
+
+
+\setlength{\parindent}{1.25cm} 
+\thispagestyle{empty} 
+
+
+%\thispagestyle{empty} 
+\tableofcontents 
+\newpage 
+\section*{Введение} 
+\addcontentsline{toc}{section}{Введение} 
+
+В данной работе рассматривается задача о построении минимального проектора (проектора, имеющего минимальную норму) при интерполяции непрерывной на шаре функции с помощью полиномов n переменных степени не выше единицы. Неравенство Лебега связывает норму проектора с величиной наилучшего приближения функции многочленами соответствующей степени. Этим, в частности, и обусловлен интерес к изучению минимальных проекторов и к получению оценок их норм. Также рассматривается вопрос условной оптимизации функции многих переменных и их программная реализация. 
+
+Также описывается реализованая в рамках данной работы компьютерная программа, которая решает задачу условной оптимизации функции многих переменных для нахождения верхних оценок минимальной нормы проектора. 
+
+
+
+\newpage 
+\newpage
+\section{Задача линейной интерполяции на n-мерном кубе}\label{s1}
+Положим $B_ n$ --- n-мерный шар.   $\Pi_1(\mathbb{R}^n)$ --- совокупность многочленов n переменных степени $\leqslant 1$. Пусть S --- невырожденный сиплекс в $\mathbb{R}^n$, вершины симплекса зададаются, как $x^{(j)} = (x_1^{(j)},...,x_n^{(j)}),  j = 1,\ldots,n $. Рассмотрим матрицу A:
+$$A := {\begin{pmatrix}
+	x_1^{(1)}& \dots & x_n^{(1)}& 1\\
+	\vdots & \ddots & \vdots & \vdots \\
+	x_1^{(n+1)}& \dots & x_n^{(n+1)}&  1
+	\end{pmatrix}}. \eqno (1.1)$$
+Скажем, что набор точек $x^{(j)}$ --- допустим для интерполяции многочленами из $\Pi_1(\mathbb{R}^n)$. Это условие эквивалентно тому, что
+матрица A является невырожденной.  
+\newline
+$\Delta := det(A)$, определитель, который получается  из  $\Delta$ заменой j-й строки на строку $(x_1, \dots, x_n, 1)$. Многочленый $\lambda_j(x) := \Delta_j(x)/\Delta$ из $\Pi_1(\mathbb{R}^n)$ называются базисными многочленами Лагранжа симплекса S и обладают свойством  $\lambda_j(x^{k}) = \delta^k_j $, где $\delta^k_j $ --- символ Кронакера. $\lambda_j = l_{1j}x_1 + \dots + l_{nj}x_n + l_{n+1j}$, коэффициентны $l_{ij}$ составляют столбцы матрицы $$A^{-1} = {\begin{pmatrix}
+	\dots & l_{1,j}&\dots\\
+	\vdots & \vdots & \vdots \\
+	\dots& l_{n,j} & \dots\\
+	\dots& l_{n+1,j} & \dots\\
+	\end{pmatrix}}.\eqno (1.2)$$
+\newline
+Так как $\lambda_j(x^{k}) = \delta^k_j $ любой многочлен $p \in \Pi_1(\mathbb{R}^n)$ удовлетворяет равенству 
+$$p(x) = \sum\limits_{j = 1}^{n+1} p(x^{(j)})\lambda_j(x). \eqno (1.3)$$
+\newline
+Так как $det(A) \neq 0 $, то для любой  $f \in C(B_n)$, где $C(B_n)$ --- совокупность $f : B_n \rightarrow \mathbb{R}$ найдется единственный многочлен $p \in \Pi_1(\mathbb{R}^n	)$ удовлетворяющий условиям:
+$$p(x^{(j)}) = f(x^{(j)}). \eqno (1.4)$$
+\subsection{Интерполяционный проектор}
+Введем в рассмотрение оператор $P : C(B_n)  \rightarrow \Pi_1(\mathbb{R}^n)$, который далее будем называть интеполяционным проектором. Интерполяционный проектор по системе узлов $x^{(j)}$ определяется с помощью равенств:
+$$Pf(x^{(j)}) = f_j := f(x^{(j)}),  j = 1,\dots, n+1. \eqno (1.1.1)$$
+
+Из этих равенств следует, что данный оператор является линейным и справедлив следующий аналог интерполяционной формулы Лагранжа:
+$$Pf(x^{(j)}) = p(x) = \sum\limits_{j=1}^{n+1} f_j\lambda_j(x). \eqno(1.1.2)$$
+
+\subsection{Норма интерполяционного проектора. Минимальная норма проектора }
+Обозначим $||P||$ норму оператора Р. Эта величина зависит от от узлов $x^{(j)}$. 
+
+Доказательство этого утверждения можно найти в монографии \cite{1}.
+\newline
+Обозначим через $\theta_n$ минимальну норму проектора, при условии, что все узлы принадлежат шару $B_n$:
+$$\theta_n := \min\limits_{x^{(j)} \in B_n}||P||\eqno (1.2.2)$$
+Интерполяционный проектор $P^*$ c нормой $||P^*|| = \theta_n$ назовем минимальным. 
+
+\section{Компьютерная программа для расчета $\theta_n$} 
+
+В рамках данной работы была реализована компьютерна программа для численной минимизации функции многих переменных. 
+Норма проектора вычисляется по формуле(1.2.1), зная это, зададим целевую функцию для минимизации. 
+$$F(A) = \max\limits_{x \in B_n} \sum\limits_{j = 1}^{n+1} |\lambda_j(x)|\eqno (2.1.1)$$
+Где А --- марица, которая имеет вид (1.1).
+
+Программа реализованна на языке Python c использованием библиотек SciPy и NumPy. Программа реализована в виде консольного приложения. Приложение зависит от выше указанных программных библиотек. Листинг  кода программы приводится для условной оптимизации функции многих переменных указан в Приложении~1. 
+
+\subsection{NumPy}
+NumPy — библиотека с открытым исходным кодом для языка программирования Python. Возможности:
+
+поддержка многомерных массивов (включая матрицы);
+поддержка высокоуровневых математических функций, предназначенных для работы с многомерными массивами.
+Математические алгоритмы, реализованные на интерпретируемых языках (например, Python), часто работают гораздо медленнее тех же алгоритмов, реализованных на компилируемых языках (например, Фортран, Си, Java). Библиотека NumPy предоставляет реализации вычислительных алгоритмов (в виде функций и операторов), оптимизированные для работы с многомерными массивами. В результате любой алгоритм, который может быть выражен в виде последовательности операций над массивами (матрицами) и реализованный с использованием NumPy, работает так же быстро, как эквивалентный код, выполняемый в MATLAB.
+
+\subsection{SciPy}
+SciPy — библиотека для языка программирования Python с открытым исходным кодом, предназначенная для выполнения научных и инженерных расчётов.
+
+Возможности:
+\begin{itemize}
+	\itemпоиск минимумов и максимумов функций;
+	\itemвычисление интегралов функций;
+	\itemподдержка специальных функций;
+	\itemобработка сигналов;
+	\itemобработка изображений;
+	\itemработа с генетическими алгоритмами;
+	\itemрешение обыкновенных дифференциальных уравнений;
+	\itemи др.
+\end{itemize}
+
+\subsection{SciPy, оптимизация с условиями}
+Общий интерфейс для решения задач как условной, так и безусловной оптимизации в пакете scipy.optimize предоставляется функцией\cite{2}
+\begin{lstlisting}
+	minimize()
+\end{lstlisting}
+
+Однако известно, что универсального способа для решения всех задач не существует, поэтому выбор адекватного метода как всегда ложится на плечи исследователя.\cite{2}
+
+Подходящий алгоритм оптимизации задается с помощью аргумента функции\cite{2}
+\begin{lstlisting}
+	minimize(..., method="")
+\end{lstlisting}
+Для условной оптимизации функции нескольких переменных доступны реализации следующих методов:\cite{2}
+\begin{itemize}
+	\item trust-constr
+	\item SLSQP
+	\item TNC
+	\item L-BFGS-B
+	\item COBYLA
+\end{itemize}	
+В зависимости от выбранного метода, по-разному задаются условия и ограничения для решения задачи:\cite{2}
+\begin{itemize}
+	\item объектом класса Bounds, для методов L-BFGS-B, TNC, SLSQP, trust-constr
+	\item списком (min, max), для этих же методов L-BFGS-B, TNC, SLSQP, trust-constr
+	\item объектом или списком объектов LinearConstraint, NonlinearConstraint для методов COBYLA, SLSQP, trust-constr
+	\item словарем или списком словарей
+	\item COBYLA
+\end{itemize}	
+Пример:
+\begin{listing}[1]{1}
+from scipy.optimize import minimize
+from scipy.optimize import rosen, rosen_der, rosen_hess, rosen_hess_prod
+
+x0 = np.array([0.5, 0])
+res = minimize(rosen, x0, method='trust-constr', jac=rosen_der, hess=rosen_hess,
+constraints=[linear_constraint, nonlinear_constraint],
+options={'verbose': 1}, bounds=bounds)
+print(res.x)
+\end{listing}
+
+\subsubsection{Алгоритм Бройдена-Флетчера-Голдфарба-Шанно (BFGS)}
+Для решения текущей задачи был выбран метод L-BFGS-B, который хорошо себя зарекомендавал на подобных задачах.
+
+
+При численной оптимизации алгоритм Бройдена-Флетчера-Голдфарба-Шанно (BFGS) является итерационным методом решения неограниченных задач нелинейной оптимизации \cite{3}.
+
+Метод BFGS относится к квази-ньютоновским методам, классу методов оптимизации восходящего подъема, которые ищут стационарную точку (предпочтительно дважды непрерывно дифференцируемой) функции. Для таких задач необходимым условием оптимальности является то, что градиент равен нулю. Метод Ньютона и методы BFGS не гарантируют сходимости, если функция не имеет квадратичного разложения Тейлора вблизи оптимума. Тем не менее, BFGS доказал свою хорошую производительность даже для негладкой оптимизации \cite{4}.
+
+В квази-ньютоновских методах матрицу гессиана вторых производных не нужно оценивать напрямую. Вместо этого матрица гессиана аппроксимируется с использованием обновлений, определяемых оценками градиента (или приблизительными оценками градиента). Квази-ньютоновские методы являются обобщениями метода секущих для нахождения корня первой производной для многомерных задач. В многомерных задачах уравнение секущей не определяет уникальное решение, а квази-ньютоновские методы отличаются тем, как они ограничивают решение. Метод BFGS является одним из самых популярных членов этого класса\cite{5}. Также широко используется L-BFGS, который представляет собой версию BFGS с ограниченной памятью, которая особенно подходит для задач с очень большим количеством переменных (например,> 1000). Вариант BFGS-B обрабатывает простые ограничения например кубом.
+
+Алгоритм назван в честь Чарльза Джорджа Бройдена, Роджера Флетчера, Дональда Голдфарба и Дэвида Шанно.
+%\begin{lstlisting}
+
+Схема алгоритма:
+\begin{flushleft}
+	дано $ \epsilon , x_{0} $ \newline
+	инициализировать $C_{0}$ \newline
+	$ k=0$ \newline
+	while $||\nabla f_{k}||>\epsilon$ \newline
+	найти направление $p_{k}=-C_{k}\nabla f_{k}$ \newline
+	вычислить $x_{k+1}=x_{k}+\alpha _{k}p_{k} \alpha _{k} удовлетворяет условиям Вольфе $ \newline
+	обозначить $s_{k}=x_{k+1}-x_{k} и y_{k}=\nabla f_{k+1}-\nabla f_{k} $ \newline
+	вычислить $C_{k+1}$ \newline
+	$ k=k+1$ \newline
+	end \newline
+\end{flushleft}
+%\end{lstlisting}
+
+
+
+
+\newpage
+\section{Заключение} 
+%\addcontentsline{toc}{section}{Заключение}
+Были опробованы методы условной оптимизации помтавляемые библиотекой SciPy. Написаны тестовые программы для вычисления минимальной нормы интерполяционного проектора на n-мерном шаре. Получены численные оценки для некоторых n. Определены методы для дальнейшей разработки программы для получения оценок минимальной нормы проектора, с помощью предложенных методов.
+\newpage
+\begin{thebibliography}{1}
+	\bibitem{1}
+	Невский М. В. Геометрические оценки в полиномиальной интерполяции. Ярославль: ЯрГУ, 2012.
+	\bibitem{2}
+	https://www.pvsm.ru/python/314870
+	\bibitem{3}
+	Fletcher, Roger (1987), Practical methods of optimization (2nd ed.), New York: John Wiley \& Sons, ISBN 978-0-471-91547-8
+	\bibitem{4}
+	Lewis, Adrian S.; Overton, Michael (2009), Nonsmooth optimization via BFGS
+	\bibitem{5}
+	Nocedal, Jorge; Wright, Stephen J. (2006), Numerical Optimization (2nd ed.), Berlin, New York: Springer-Verlag, ISBN 978-0-387-30303-1
+	
+	
+\end{thebibliography}
+\newpage
+
+\begin{flushright}
+	Приложение 1
+\end{flushright}
+\begin{center}
+	{\bf Листинг программы }
+\end{center}
+\addcontentsline{toc}{section}{Приложение 1} 
+\begin{listing}[1]{1}
+import scipy as scp
+import numpy as np
+import random as rnd
+from scipy.optimize import minimize
+from scipy.optimize import rosen, rosen_der, rosen_hess, rosen_hess_prod
+from scipy.optimize import Bounds
+from scipy.optimize import SR1
+from scipy.optimize import BFGS
+from scipy.optimize import LinearConstraint
+from scipy.optimize import NonlinearConstraint
+
+x0 = np.array([])
+dim = 5
+context_vect = []
+
+rnd_max = 10000
+
+class settings:
+	def __init__(self):
+		pass
+
+	def setMatrinx(self, matrix):
+		self.context_matrix = matrix
+
+def cons_f(x):
+	return sum([i**2 for i in x])
+
+nonlinear_constraint = NonlinearConstraint (cons_f, 0, 1, jac = '2-point', hess = BFGS ())   
+
+def getRandomVect(vec_len):
+	rnd_vec = rnd.sample(range(rnd_max), vec_len)
+	rnd_vec = [float(i)/rnd_max for i in rnd_vec]
+	return np.array(rnd_vec)
+
+def getMatrixByVect(x):
+	vect = np.array([1 for i in range(dim + 1)])
+	x = np.concatenate((x,vect), axis = None)
+	matrix = np.array(x).reshape(dim+1, dim+1)
+	matrix = matrix.transpose()
+	return matrix
+
+def getVectByMatrix(matrix):
+	return np.asarray([matrix[i,0:dim-1] for i in range(dim-1)])
+
+
+
+def getNorm(x, params):
+	sum = 0.0
+	for i in range(dim):
+		cur_sum = 0.0
+		for j in range(dim):
+			cur_sum += params[0][i][j] * x[j]
+		sum += abs(cur_sum)
+	return -sum
+
+def func(x):
+	matrix = np.linalg.inv(getMatrixByVect(x))
+
+	x0_sphere = getRandomVect( dim*(dim+1) )
+	max_t = minimize(getNorm, x0_sphere, [matrix],method='L-BFGS-B',  jac="2-point", hess=SR1(),
+	constraints=[nonlinear_constraint], options={'eps': 1e-10})
+	res = max_t.x
+	return -getNorm(res, [matrix])
+
+
+x0 = getRandomVect(dim*(dim+1))
+
+res = minimize(func, x0, method='trust-constr',  jac="2-point", hess=SR1(),
+	constraints=[nonlinear_constraint],
+	options={'verbose': 1})
+	print(res)
+
+\end{listing}
+\end{document}
