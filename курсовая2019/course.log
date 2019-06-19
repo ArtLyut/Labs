@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  19 JUN 2019 00:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  20 JUN 2019 00:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -805,13 +805,13 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 78.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 89.
+(babel)             in language  on input line 98.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 89.
+(babel)             in language  on input line 98.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 89.
+(babel)             in language  on input line 98.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 89.
+(babel)             in language  on input line 98.
  [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./cour
@@ -825,212 +825,215 @@ se.toc)
 \openout5 = `course.toc'.
 
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 100.
+(babel)             in language  on input line 109.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 100.
+(babel)             in language  on input line 109.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 100.
+(babel)             in language  on input line 109.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 100.
+(babel)             in language  on input line 109.
  [3]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 102.
+(babel)             in language  on input line 111.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 102.
+(babel)             in language  on input line 111.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 110.
+(babel)             in language  on input line 119.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 110.
+(babel)             in language  on input line 119.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 110.
+(babel)             in language  on input line 119.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 110.
+(babel)             in language  on input line 119.
  [4]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 112.
+(babel)             in language  on input line 120.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 112.
+(babel)             in language  on input line 120.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 134.
+(babel)             in language  on input line 142.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 134.
+(babel)             in language  on input line 142.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 141.
+(babel)             in language  on input line 149.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 141.
+(babel)             in language  on input line 149.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 147.
+(babel)             in language  on input line 153.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 147.
+(babel)             in language  on input line 153.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 147.
+(babel)             in language  on input line 153.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 147.
+(babel)             in language  on input line 153.
  [5]
-Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 150.
-Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 150.
+Underfull \hbox (badness 10000) in paragraph at lines 155--157
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 150.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\theta' on input line 150.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 150.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 150.
+ []
 
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 159.
+(babel)             in language  on input line 162.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 159.
+(babel)             in language  on input line 162.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 162.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\theta' on input line 162.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 162.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 162.
+
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 166.
+(babel)             in language  on input line 171.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 166.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 171.
+(babel)             in language  on input line 171.
+Package babel Info: Redefining russian shorthand "|
+(babel)             in language  on input line 178.
+Package babel Info: Redefining russian shorthand "~
+(babel)             in language  on input line 178.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 183.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 171.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 183.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 177.
+(babel)             in language  on input line 185.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 177.
+(babel)             in language  on input line 185.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 177.
+(babel)             in language  on input line 185.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 177.
+(babel)             in language  on input line 185.
  [6]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 181.
+(babel)             in language  on input line 193.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 181.
-LaTeX Font Info:    Try loading font information for T2A+cmtt on input line 210
+(babel)             in language  on input line 193.
+LaTeX Font Info:    Try loading font information for T2A+cmtt on input line 222
 .
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
 File: t2acmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 )
-Overfull \hbox (7.76782pt too wide) in paragraph at lines 212--212
+Overfull \hbox (7.76782pt too wide) in paragraph at lines 224--224
 [][] \T2A/cmtt/m/n/12 from scipy.optimize import rosen, rosen_der, rosen_hess, 
 rosen_hess_prod[] 
  []
 
-
-Overfull \hbox (57.15576pt too wide) in paragraph at lines 215--215
+Package babel Info: Redefining russian shorthand "|
+(babel)             in language  on input line 226.
+Package babel Info: Redefining russian shorthand "~
+(babel)             in language  on input line 226.
+Package babel Info: Redefining russian shorthand "|
+(babel)             in language  on input line 226.
+Package babel Info: Redefining russian shorthand "~
+(babel)             in language  on input line 226.
+[7]
+Overfull \hbox (57.15576pt too wide) in paragraph at lines 227--227
 [][] \T2A/cmtt/m/n/12 res = minimize(rosen, x0, method='trust-constr', jac=rose
 n_der, hess=rosen_hess,[] 
  []
 
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 221.
+(babel)             in language  on input line 233.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 221.
-Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 225.
-Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 225.
-Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 225.
-Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 225.
-[7]
-Overfull \hbox (0.11522pt too wide) in paragraph at lines 229--230
+(babel)             in language  on input line 233.
+
+Overfull \hbox (0.11522pt too wide) in paragraph at lines 241--242
 []\T2A/cmr/m/n/12 В квази-ньютоновских ме-то-дах мат-ри-цу гес-си-а-на вто-рых 
 про-из-вод-ных не нуж-
  []
 
 
-LaTeX Warning: Command \cyru invalid in math mode on input line 241.
+LaTeX Warning: Command \cyru invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrd invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrd invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyro invalid in math mode on input line 241.
+LaTeX Warning: Command \cyro invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrv invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrv invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrl invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrl invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyre invalid in math mode on input line 241.
+LaTeX Warning: Command \cyre invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrt invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrt invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrv invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrv invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyro invalid in math mode on input line 241.
+LaTeX Warning: Command \cyro invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrr invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrr invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrya invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrya invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyre invalid in math mode on input line 241.
+LaTeX Warning: Command \cyre invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrt invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrt invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyru invalid in math mode on input line 241.
+LaTeX Warning: Command \cyru invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrs invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrs invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrl invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrl invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyro invalid in math mode on input line 241.
+LaTeX Warning: Command \cyro invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrv invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrv invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyri invalid in math mode on input line 241.
+LaTeX Warning: Command \cyri invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrya invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrya invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrm invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrm invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \CYRV invalid in math mode on input line 241.
+LaTeX Warning: Command \CYRV invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyro invalid in math mode on input line 241.
+LaTeX Warning: Command \cyro invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrl invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrl invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrsftsn invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrsftsn invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyrf invalid in math mode on input line 241.
+LaTeX Warning: Command \cyrf invalid in math mode on input line 253.
 
 
-LaTeX Warning: Command \cyre invalid in math mode on input line 241.
+LaTeX Warning: Command \cyre invalid in math mode on input line 253.
 
 Missing character: There is no у in font cmr12!
 Missing character: There is no д in font cmr12!
@@ -1060,100 +1063,100 @@ Missing character: There is no ь in font cmr12!
 Missing character: There is no ф in font cmr12!
 Missing character: There is no е in font cmr12!
 
-LaTeX Warning: Command \cyri invalid in math mode on input line 242.
+LaTeX Warning: Command \cyri invalid in math mode on input line 254.
 
 Missing character: There is no и in font cmr12!
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 252.
+(babel)             in language  on input line 264.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 252.
+(babel)             in language  on input line 264.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 252.
+(babel)             in language  on input line 264.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 252.
+(babel)             in language  on input line 264.
 [8]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 265.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 265.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 256.
+(babel)             in language  on input line 268.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 256.
+(babel)             in language  on input line 268.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 256.
+(babel)             in language  on input line 268.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 256.
+(babel)             in language  on input line 268.
  [9]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 271.
+(babel)             in language  on input line 283.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 271.
+(babel)             in language  on input line 283.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 271.
+(babel)             in language  on input line 283.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 271.
+(babel)             in language  on input line 283.
  [10]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 279.
+(babel)             in language  on input line 291.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 279.
+(babel)             in language  on input line 291.
 
-Overfull \hbox (7.76782pt too wide) in paragraph at lines 285--285
+Overfull \hbox (7.76782pt too wide) in paragraph at lines 297--297
 [][] \T2A/cmtt/m/n/12 from scipy.optimize import rosen, rosen_der, rosen_hess, 
 rosen_hess_prod[] 
  []
 
 
-Overfull \hbox (118.89069pt too wide) in paragraph at lines 308--308
+Overfull \hbox (118.89069pt too wide) in paragraph at lines 320--320
 [][] \T2A/cmtt/m/n/12 nonlinear_constraint = NonlinearConstraint (cons_f, 0, 1,
  jac = '2-point', hess = BFGS ())[] 
  []
 
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 328.
+(babel)             in language  on input line 340.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 328.
+(babel)             in language  on input line 340.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 328.
+(babel)             in language  on input line 340.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 328.
+(babel)             in language  on input line 340.
 [11]
-Overfull \hbox (180.62561pt too wide) in paragraph at lines 340--340
+Overfull \hbox (180.62561pt too wide) in paragraph at lines 352--352
 [][]         \T2A/cmtt/m/n/12 max_t = minimize(getNorm, x0_sphere, [matrix],met
 hod='L-BFGS-B',  jac="2-point", hess=SR1(),[] 
  []
 
 
-Overfull \hbox (26.2883pt too wide) in paragraph at lines 348--348
+Overfull \hbox (26.2883pt too wide) in paragraph at lines 360--360
 [][] \T2A/cmtt/m/n/12 res = minimize(func, x0, method='trust-constr',  jac="2-p
 oint", hess=SR1(),[] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 354.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 366.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 354.
+(babel)             in language  on input line 366.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 354.
+(babel)             in language  on input line 366.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 354.
+(babel)             in language  on input line 366.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 354.
+(babel)             in language  on input line 366.
 [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 354.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 366.
  (./course.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 354.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 354.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 366.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 366.
 Package rerunfilecheck Info: File `course.out' has not changed.
-(rerunfilecheck)             Checksum: 9E694922024807006C9B203A973B9BB2;2791.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 354.
+(rerunfilecheck)             Checksum: 035C15ABFA61ABA5C0FB847AF5F54B33;2791.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 366.
  ) 
 Here is how much of TeX's memory you used:
- 14348 strings out of 492649
- 201207 string characters out of 6129622
- 297497 words of memory out of 5000000
- 18005 multiletter control sequences out of 15000+600000
- 24381 words of font info for 74 fonts, out of 8000000 for 9000
+ 14343 strings out of 492649
+ 201088 string characters out of 6129622
+ 297517 words of memory out of 5000000
+ 17999 multiletter control sequences out of 15000+600000
+ 22782 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,10n,43p,1575b,989s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2a.enc
@@ -1174,11 +1177,12 @@ texlive/2018/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/te
 xlive/2018/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texl
 ive/2018/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texliv
 e/2018/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/
-2018/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on course.pdf (11 pages, 274764 bytes).
+2018/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on course.pdf (11 pages, 289102 bytes).
 PDF statistics:
- 211 PDF objects out of 1000 (max. 8388607)
- 178 compressed objects within 2 object streams
+ 215 PDF objects out of 1000 (max. 8388607)
+ 181 compressed objects within 2 object streams
  34 named destinations out of 1000 (max. 500000)
  89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
